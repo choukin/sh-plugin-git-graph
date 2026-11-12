@@ -1,9 +1,9 @@
 # dsh-plugin-git-graph · Git 图谱
 
-[![npm version](https://img.shields.io/npm/v/dsh-plugin-git-graph)](https://www.npmjs.com/package/dsh-plugin-git-graph)
-[![npm downloads](https://img.shields.io/npm/dw/dsh-plugin-git-graph)](https://www.npmjs.com/package/dsh-plugin-git-graph)
-[![license](https://img.shields.io/npm/l/dsh-plugin-git-graph)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/choukin/sh-plugin-git-graph)](https://github.com/choukin/sh-plugin-git-graph)
+[![npm version](https://img.shields.io/npm/v/dsh-plugin-git-graph.svg)](https://www.npmjs.com/package/dsh-plugin-git-graph)
+[![npm downloads](https://img.shields.io/npm/dw/dsh-plugin-git-graph.svg)](https://www.npmjs.com/package/dsh-plugin-git-graph)
+[![license](https://img.shields.io/npm/l/dsh-plugin-git-graph.svg)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/choukin/sh-plugin-git-graph.svg)](https://github.com/choukin/sh-plugin-git-graph)
 
 在 DeepSeek Harness 的右侧栏浏览当前项目的 Git 提交图谱，并在输入框旁直接切换分支。交互参照 VS Code Git Graph / SourceTree，读写分离：除了「切换分支」和手动触发的 `git fetch`，其余全部只读。
 
