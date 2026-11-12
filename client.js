@@ -1155,7 +1155,10 @@ window.__ModuleLoader__.load({
                   h('span', { className: 'dgg-cell dgg-cell-graph' },
                     h(LaneRow, { row, colorOf, height: ROW_HEIGHT })),
                   h('span', { className: 'dgg-cell dgg-cell-desc' },
-                    (commit.badges ?? []).map((badge) => h(RefBadge, { key: `${badge.kind}:${badge.name}`, badge })),
+                    (commit.badges ?? []).length > 0
+                      ? h('span', { className: 'dgg-badges' },
+                        commit.badges.map((badge) => h(RefBadge, { key: `${badge.kind}:${badge.name}`, badge })))
+                      : null,
                     h('span', { className: 'dgg-subject', title: commit.subject }, commit.subject || '-'),
                   ),
                   h('span', { className: 'dgg-cell dgg-cell-muted' }, formatDate(commit.time)),
@@ -1743,12 +1746,19 @@ window.__ModuleLoader__.load({
       '.dgg-cell-graph .dgg-lanes{height:100%;}',
       '.dgg-lanes{display:block;overflow:visible;flex:none;}',
       '.dgg-lanes line,.dgg-lanes path{shape-rendering:geometricPrecision;}',
-      '.dgg-cell-desc{gap:4px;white-space:nowrap;padding-left:8px;}',
-      '.dgg-subject{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;padding-left:2px;color:var(--dsw-alias-label-primary);}',
+      // Badges are part of the description: they stay visible and the subject
+      // shrinks around them. A subject that shrank first would take the whole
+      // cell and leave the remote/tag badges cut off at the right edge.
+      '.dgg-cell-desc{gap:4px;white-space:nowrap;padding-left:8px;flex:1 1 auto;min-width:0;}',
+      '.dgg-badges{display:inline-flex;align-items:center;gap:4px;flex:0 0 auto;min-width:0;}',
+      '.dgg-subject{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:0 1 auto;min-width:0;padding-left:2px;color:var(--dsw-alias-label-primary);}',
       '.dgg-cell-muted{padding-left:4px;color:var(--dsw-alias-label-secondary);font-variant-numeric:tabular-nums;white-space:nowrap;text-overflow:ellipsis;}',
       '.dgg-cell-hash{font-family:var(--dsw-font-family-code,ui-monospace,SFMono-Regular,Menlo,monospace);font-size:11px;}',
-      '.dgg-badge{display:inline-flex;align-items:center;gap:3px;height:17px;padding:0 5px;border-radius:4px;border:1px solid var(--dsw-alias-border-l2);font-size:11px;line-height:15px;max-width:150px;flex:none;}',
-      '.dgg-badge-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}',
+      '.dgg-badge{display:inline-flex;align-items:center;flex:none;gap:3px;height:17px;padding:0 5px;border-radius:4px;border:1px solid var(--dsw-alias-border-l2);font-size:11px;line-height:15px;max-width:88px;}',
+      // A squeezed badge shortens its label instead of overlapping the next one.
+      '.dgg-badges > .dgg-badge{flex:0 1 auto;min-width:0;}',
+      '.dgg-badge-icon{flex:none;display:block;}',
+      '.dgg-badge-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}',
       '.dgg-badge-head{background:var(--dsw-alias-brand-primary);border-color:var(--dsw-alias-brand-primary);color:var(--dsw-alias-bg-base);font-weight:600;}',
       '.dgg-badge-local{background:var(--dsw-alias-bg-layer-2);color:var(--dsw-alias-label-primary);}',
       '.dgg-badge-remote{background:transparent;color:#2f7de1;border-color:#2f7de180;}',
