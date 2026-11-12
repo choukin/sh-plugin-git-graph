@@ -1,14 +1,10 @@
 {
   "name": "dsh-plugin-git-graph",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": false,
   "license": "MIT",
   "description": "在 DeepSeek Harness 右侧栏浏览当前项目的 Git 提交图谱，并在输入框旁直接切换分支：多泳道连线、HEAD / 分支 / 标签 / 远程徽标、提交详情与单文件 diff",
-  "author": {
-    "name": "choukin",
-    "email": "choukin@dingtalk.com",
-    "url": "https://github.com/choukin"
-  },
+  "author": "choukin <choukin@dingtalk.com> (https://github.com/choukin)",
   "contributors": [
     {
       "name": "choukin",
