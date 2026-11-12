@@ -31,6 +31,8 @@ npm install dsh-plugin-git-graph
 
 （发布在内网源 `https://npm.ledupeiyou.com/`。）装进 Harness profile 后，用插件管理启用，或把它加进 profile `package.json` 的 `dsh.profile.bundles`，并保留 `cordis.patch.yml` 里的 `git-graph-panel` 行。**Host 半区不会热替换**：装好或升级后需要重启 Harness 进程。
 
+分支下拉把**本地分支**和**远程分支**（`origin/*` 等）分成两组；选中远程分支时按那条追踪引用过滤。远端分支列表跟随「远程分支」勾选，未勾选时不显示。
+
 ## 配置
 
 `git-graph-panel` 行的 `config`（也可在插件设置里改）：

@@ -99,9 +99,20 @@ test('readGraph paginates without dropping or repeating commits', async () => {
 });
 
 test('readGraph filters to one branch and honors the tag/remote switches', async () => {
+  // `dev` is created at `HEAD~2`. After the merge fixture that is the root
+  // commit, so the walk reaches only history behind it: `C main commit` sits
+  // on the first-parent side of the merge and is not reachable from there.
   const devOnly = await readGraph(root, { limit: 50, branches: ['dev'] });
-  assert.ok(devOnly.commits.some((commit) => commit.subject === 'C main commit'));
-  assert.ok(!devOnly.commits.some((commit) => commit.subject === 'D on feat/y'));
+  assert.deepEqual(devOnly.commits.map((commit) => commit.subject), ['feat: root commit']);
+
+  // A remote-tracking filter walks `refs/remotes/<name>`; `origin/dev` is one
+  // commit ahead of the local `dev`, so it does reach `C main commit`.
+  const remote = await readGraph(root, { limit: 50, branches: ['origin/dev'], remoteBranches: ['origin/dev'] });
+  assert.ok(remote.commits.some((commit) => commit.subject === 'C main commit'));
+  assert.ok(!remote.commits.some((commit) => commit.subject === 'D on feat/y'));
+  // Without the hint the name would be read as a local branch (`refs/heads`).
+  const asLocal = await readGraph(root, { limit: 50, branches: ['dev'] });
+  assert.ok(!asLocal.commits.some((commit) => commit.subject === 'C main commit'));
 });
 
 test('parseDecorations covers every decoration form', () => {

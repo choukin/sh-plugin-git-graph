@@ -54,6 +54,8 @@ window.__ModuleLoader__.load({
         'toolbar.repo': '仓库',
         'toolbar.branch': '分支',
         'toolbar.showAll': '显示全部分支',
+        'toolbar.localBranches': '本地分支',
+        'toolbar.remoteBranches': '远程分支',
         'toolbar.tags': '标签',
         'toolbar.remotes': '远程分支',
         'toolbar.refresh': '刷新',
@@ -136,6 +138,8 @@ window.__ModuleLoader__.load({
         'toolbar.repo': 'Repository',
         'toolbar.branch': 'Branches',
         'toolbar.showAll': 'Show all branches',
+        'toolbar.localBranches': 'Local branches',
+        'toolbar.remoteBranches': 'Remote branches',
         'toolbar.tags': 'Tags',
         'toolbar.remotes': 'Remote branches',
         'toolbar.refresh': 'Refresh',
@@ -1030,6 +1034,13 @@ window.__ModuleLoader__.load({
       const repo = repoInfo;
       const directoryShown = directory !== '' ? directory : boot?.directory ?? '';
       const localBranches = (state?.refs ?? []).filter((ref) => ref.kind === 'local');
+      // Remote-tracking branches are offered too (origin/* etc.). They only
+      // come with the graph when the 远程分支 switch is on, but picking one
+      // turns into a filter on that ref, so the list follows the checkbox.
+      const remoteBranches = (state?.refs ?? [])
+        .filter((ref) => ref.kind === 'remote')
+        .map((ref) => ref.name)
+        .sort((a, b) => a.localeCompare(b));
       const translateError = (error) => {
         if (error?.code && DICT.zh[`error.${error.code}`] !== undefined) return t(`error.${error.code}`);
         return error?.message ?? t('error.unknown');
@@ -1090,7 +1101,14 @@ window.__ModuleLoader__.load({
                 },
               },
               h('option', { value: '' }, t('toolbar.showAll')),
-              localBranches.map((ref) => h('option', { key: ref.name, value: ref.name }, ref.name)),
+              localBranches.length > 0
+                ? h('optgroup', { label: t('toolbar.localBranches') },
+                  localBranches.map((ref) => h('option', { key: ref.name, value: ref.name }, ref.name)))
+                : null,
+              remoteBranches.length > 0
+                ? h('optgroup', { label: t('toolbar.remoteBranches') },
+                  remoteBranches.map((name) => h('option', { key: name, value: name }, name)))
+                : null,
               ),
             ),
             h('label', { className: 'dgg-check' },
