@@ -1,0 +1,9 @@
+{
+  "meta": {
+    "title": "Git graph",
+    "description": "Browse the current project's Git history as lanes in the right sidebar: branch, tag and remote badges, commit details, changed files and diffs."
+  },
+  "tab": {
+    "title": "Git graph"
+  }
+}

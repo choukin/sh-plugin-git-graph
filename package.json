@@ -1,0 +1,49 @@
+{
+  "name": "dsh-plugin-git-graph",
+  "version": "0.2.0",
+  "private": false,
+  "license": "MIT",
+  "description": "在 Harness 右侧栏浏览当前项目的 Git 提交图谱：多泳道连线、分支/标签/远程徽标、提交详情与文件差异",
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "dsh-plugin",
+    "cordis",
+    "git",
+    "git-graph",
+    "git-log",
+    "vscode-git-graph"
+  ],
+  "scripts": {
+    "check": "node --check lib/git.js && node --check lib/index.js && node --check client.js",
+    "test": "node --test 'test/*.spec.mjs'"
+  }
+}

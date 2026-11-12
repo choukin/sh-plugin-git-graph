@@ -1,0 +1,16 @@
+# dsh-plugin-git-graph bundle patch.
+#
+# One Host row: the read-only git backend plus its `/api/dsh-git-graph` route.
+# The browser half declared by `dsh.client` in package.json renders the right
+# sidebar tab, so no second row is needed.
+- insert:
+    - id: git-graph-panel
+      name: 'dsh-plugin-git-graph'
+      config:
+        # Empty = inspect the Harness default working directory. Set an absolute
+        # path to pin the Graph tab to one repository.
+        workingDirectory: ''
+        # Commits fetched per page (20–3000).
+        pageSize: 200
+        # Show a `git fetch --all --prune` button in the tab toolbar.
+        enableFetch: false
